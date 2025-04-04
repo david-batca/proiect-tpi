@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <h1>TEST</h1>
-  </div>
+  <h1>TEST</h1>
 </template>
 
-<script setup></script>
+<script setup>
+  definePageMeta({
+    name: "Acasa",
+  });
+  // const { data, error, status } = await useFetch("/api/students");
+  const response = await useFetch("/api/students");
+</script>
 
-<style scoped>
-  h1 {
-    @apply bg-red-500 text-4xl font-bold;
-  }
-</style>
+<style scoped></style>
