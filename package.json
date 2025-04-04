@@ -23,6 +23,6 @@
     "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.30.6",
     "tsx": "^4.19.3",
-    "vuetify-nuxt-module": "^0.18.4"
+    "vuetify-nuxt-module": "^0.18.5"
   }
 }

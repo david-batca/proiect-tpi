@@ -1,32 +1,35 @@
 <template>
   <v-navigation-drawer
-    v-if="display"
     v-model="show"
-    :permanent="display.mdAndUp?.value"
-    color="blue-darken-1"
+    :permanent="mdAndUp"
+    :temporary="!mdAndUp"
+    color="indigo-darken-4"
     floating
+    sticky
   >
-    <v-list-item
-      to="/"
-      rounded="xl"
-      prepend-icon="mdi-view-dashboard"
-      title="Acasa"
-      value="home"
-    ></v-list-item>
-    <v-list-item
-      to="/studenti"
-      rounded="xl"
-      prepend-icon="mdi-view-dashboard"
-      title="Studenti"
-      value="home"
-    ></v-list-item>
+    <v-list density="compact" nav>
+      <v-list-item
+        to="/"
+        prepend-icon="mdi-view-dashboard"
+        title="Acasa"
+        value="home"
+      ></v-list-item>
+
+      <v-list-item
+        to="/studenti"
+        prepend-icon="mdi-account"
+        title="Studenti"
+        value="studenti"
+      ></v-list-item>
+    </v-list>
   </v-navigation-drawer>
 </template>
 
 <script setup>
-  import { ref } from "vue";
   import { useDisplay } from "vuetify";
 
-  const display = useDisplay();
-  const show = ref(display?.mdAndUp?.value);
+  const { mdAndUp } = useDisplay();
+  const show = ref(mdAndUp.value);
 </script>
+
+<style></style>

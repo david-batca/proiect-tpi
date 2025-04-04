@@ -1,10 +1,11 @@
 <template>
-  <div>
-    <v-layout>
+  <v-layout>
+    <v-app class="overflow-y-hidden">
       <Navbar />
 
       <Appbar />
-      <v-sheet color="blue-darken-1" class="pa-4 pt-0">
+
+      <v-sheet color="indigo-darken-4" class="pa-4 pt-0 h-screen">
         <v-main>
           <v-sheet
             color="blue-grey-darken-3"
@@ -14,8 +15,8 @@
           </v-sheet>
         </v-main>
       </v-sheet>
-    </v-layout>
-  </div>
+    </v-app>
+  </v-layout>
 </template>
 
 <script setup></script>
