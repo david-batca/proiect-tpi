@@ -1,12 +1,10 @@
 <template>
-  <v-card variant="flat" class="bg-blue-grey-darken-4 mb-8" color="">
+  <v-card variant="flat" class="bg-blue-grey-darken-3 mb-8" color="">
     <template #title>
       <h1>Studenti</h1>
     </template>
 
-    <template #append>
-      <v-btn color="blue-darken-4" class="round-lg">Adauga student</v-btn>
-    </template>
+    <template #append> <AddStudentForm /></template>
   </v-card>
 
   <v-card variant="flat" class="bg-blue-grey-darken-3">

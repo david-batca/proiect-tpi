@@ -5,11 +5,11 @@
 
       <Appbar />
 
-      <v-sheet color="indigo-darken-4" class="pa-4 pt-0 h-screen">
+      <v-sheet color="blue-darken-4" class="pa-4 pt-0 h-screen">
         <v-main>
           <v-sheet
-            color="blue-grey-darken-3"
-            class="pa-4 rounded-xl main-height"
+            color="blue-grey-darken-4"
+            class="pa-4 rounded-lg main-height"
           >
             <slot />
           </v-sheet>
