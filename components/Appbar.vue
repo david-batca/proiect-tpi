@@ -18,12 +18,9 @@
         variant="text"
         @click="() => router.back()"
       />
-      <!-- <h1 class="text-h6 d-none d-md-block font-weight-bold">
-          {{ route.meta?.title }}
-        </h1>
-        <h1 class="text-subtitle-1 d-md-none d-block font-weight-bold">
-          {{ route.meta?.title }}
-        </h1> -->
+      <h1 class="text-h6 d-none d-md-block font-weight-bold">
+        {{ route.name }}
+      </h1>
     </div>
   </v-app-bar>
 </template>

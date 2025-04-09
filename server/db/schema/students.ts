@@ -6,7 +6,7 @@ export const Students = pgTable("students", {
   name: text().notNull(),
   age: integer().notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
-  phone: varchar({ length: 12 }).notNull(),
+  phone: varchar({ length: 12 }).notNull().unique(),
   groupId: integer("group_id").references(() => Groups.id, {
     onDelete: "set null",
   }),

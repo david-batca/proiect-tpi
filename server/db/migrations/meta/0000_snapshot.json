@@ -1,5 +1,5 @@
 {
-  "id": "87164ae3-cc06-4e14-ae03-d898e967ca24",
+  "id": "d4bdb5c6-55d8-49b3-8635-2c489b6266b1",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -19,10 +19,30 @@
           "type": "varchar(10)",
           "primaryKey": false,
           "notNull": true
+        },
+        "series_id": {
+          "name": "series_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "groups_series_id_series_id_fk": {
+          "name": "groups_series_id_series_id_fk",
+          "tableFrom": "groups",
+          "tableTo": "series",
+          "columnsFrom": [
+            "series_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "groups_name_unique": {
@@ -50,6 +70,30 @@
         "name": {
           "name": "name",
           "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "groupsYear1": {
+          "name": "groupsYear1",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "groupsYear2": {
+          "name": "groupsYear2",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "groupsYear3": {
+          "name": "groupsYear3",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "groupsYear4": {
+          "name": "groupsYear4",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         }
@@ -103,10 +147,30 @@
           "type": "varchar(12)",
           "primaryKey": false,
           "notNull": true
+        },
+        "group_id": {
+          "name": "group_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "students_group_id_groups_id_fk": {
+          "name": "students_group_id_groups_id_fk",
+          "tableFrom": "students",
+          "tableTo": "groups",
+          "columnsFrom": [
+            "group_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "students_email_unique": {
@@ -114,6 +178,13 @@
           "nullsNotDistinct": false,
           "columns": [
             "email"
+          ]
+        },
+        "students_phone_unique": {
+          "name": "students_phone_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "phone"
           ]
         }
       },

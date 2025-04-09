@@ -1,35 +1,24 @@
 <template>
   <v-btn color="blue-darken-4" class="round-lg" @click="isActive = true"
-    >Adauga student</v-btn
+    >Adauga serie</v-btn
   >
 
-  <v-dialog v-model="isActive" width="600">
+  <v-dialog v-model="isActive" width="400">
     <v-card color="blue-grey-darken-4">
       <v-toolbar color="blue-grey-darken-3">
-        <v-toolbar-title>Adauga serviciu</v-toolbar-title>
+        <v-toolbar-title>Adauga serie</v-toolbar-title>
 
         <v-btn icon="mdi-close" @click="isActive = false"></v-btn>
       </v-toolbar>
 
-      <v-card-text class="px-4"
-        ><v-container>
-          <v-row>
-            <v-col>
-              <v-text-field
-                v-model="name"
-                label="Nume complet"
-                variant="outlined"
-                density="compact"
-                clearable
-              ></v-text-field>
-            </v-col>
-            <v-col></v-col>
-          </v-row>
-          <v-row>
-            <v-col></v-col>
-            <v-col></v-col>
-          </v-row>
-        </v-container>
+      <v-card-text class="px-4">
+        <v-text-field
+          v-model="name"
+          label="Nume complet"
+          variant="outlined"
+          density="compact"
+          clearable
+        ></v-text-field>
       </v-card-text>
 
       <v-card-actions>

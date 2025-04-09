@@ -4,27 +4,17 @@
     color="blue-grey-darken-3"
     class="d-flex justify-space-between align-center rounded-lg pa-4 mb-8"
   >
-    <h1>Studenti</h1>
+    <h1>Serii si grupe</h1>
 
-    <AddStudentForm />
+    <AddSeriesForm />
   </v-sheet>
 
   <v-sheet variant="flat" color="blue-grey-darken-3" class="rounded-lg pa-4">
-    <v-data-table
-      class="bg-blue-grey-darken-3"
-      :items="[
-        { id: 1, name: 'test 1' },
-        { id: 2, name: 'test 2' },
-      ]"
-    ></v-data-table>
   </v-sheet>
 </template>
 
 <script setup>
   definePageMeta({
-    name: "Studenti",
+    name: "Serii si grupe",
   });
-  const route = useRoute();
 </script>
-
-<style></style>

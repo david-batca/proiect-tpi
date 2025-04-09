@@ -22,6 +22,13 @@
         title="Studenti"
         value="studenti"
       ></v-list-item>
+
+      <v-list-item
+        to="/serii-si-grupe"
+        prepend-icon="mdi-view-list"
+        title="Serii si grupe"
+        value="serii-si-grupe"
+      ></v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
