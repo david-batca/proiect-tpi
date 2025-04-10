@@ -10,11 +10,20 @@
   </v-sheet>
 
   <v-sheet variant="flat" color="blue-grey-darken-3" class="rounded-lg pa-4">
+    <!-- {{ series }} -->
   </v-sheet>
 </template>
 
 <script setup>
   definePageMeta({
     name: "Serii si grupe",
+  });
+
+  // const series = ref([]);
+
+  const { data: series } = await useFetch("/api/series");
+
+  onMounted(() => {
+    console.log(series.value);
   });
 </script>

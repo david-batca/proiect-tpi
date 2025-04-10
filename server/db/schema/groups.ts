@@ -1,5 +1,6 @@
 import { integer, pgTable, serial, varchar } from "drizzle-orm/pg-core";
 import { Series } from "./series";
+import { relations } from "drizzle-orm";
 
 export const Groups = pgTable("groups", {
   id: serial().primaryKey(),
@@ -7,4 +8,13 @@ export const Groups = pgTable("groups", {
   seriesId: integer("series_id")
     .references(() => Series.id, { onDelete: "cascade" })
     .notNull(),
+});
+
+export const GroupsRelations = relations(Groups, ({ one }) => {
+  return {
+    series: one(Series, {
+      fields: [Groups.seriesId],
+      references: [Series.id],
+    }),
+  };
 });
