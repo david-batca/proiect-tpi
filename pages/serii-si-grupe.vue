@@ -6,7 +6,14 @@
   >
     <h1>Serii si grupe</h1>
 
-    <AddSeriesForm />
+    <AddSeriesForm
+      @addSeries="
+        () => {
+          series.push(seriesStore.newSeries);
+          seriesStore.resetNewSeries();
+        }
+      "
+    />
   </v-sheet>
 
   <v-sheet variant="flat" color="blue-grey-darken-3" class="rounded-lg pa-4">
@@ -19,7 +26,7 @@
     name: "Serii si grupe",
   });
 
-  // const series = ref([]);
+  const seriesStore = useSeriesStore();
 
   const { data: series } = await useFetch("/api/series");
 

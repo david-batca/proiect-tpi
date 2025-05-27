@@ -13,7 +13,7 @@
 
       <v-card-text class="px-4">
         <v-text-field
-          v-model="name"
+          v-model="newSeries.name"
           label="Nume / Litera "
           variant="outlined"
           density="compact"
@@ -21,7 +21,7 @@
         ></v-text-field>
 
         <v-number-input
-          v-model="groupsYear1"
+          v-model="newSeries.groupsPerYear[1]"
           controlVariant="stacked"
           label="Numar grupe anul 1"
           :hideInput="false"
@@ -29,7 +29,7 @@
         ></v-number-input>
 
         <v-number-input
-          v-model="groupsYear2"
+          v-model="newSeries.groupsPerYear[2]"
           controlVariant="stacked"
           label="Numar grupe anul 2"
           :hideInput="false"
@@ -37,7 +37,7 @@
         ></v-number-input>
 
         <v-number-input
-          v-model="groupsYear3"
+          v-model="newSeries.groupsPerYear[3]"
           controlVariant="stacked"
           label="Numar grupe anul 3"
           :hideInput="false"
@@ -45,7 +45,7 @@
         ></v-number-input>
 
         <v-number-input
-          v-model="groupsYear4"
+          v-model="newSeries.groupsPerYear[4]"
           controlVariant="stacked"
           label="Numar grupe anul 4"
           :hideInput="false"
@@ -73,22 +73,39 @@
 
 <script setup>
   const isActive = ref(false);
-  const name = ref(null);
-  const groupsYear1 = ref(null);
-  const groupsYear2 = ref(null);
-  const groupsYear3 = ref(null);
-  const groupsYear4 = ref(null);
+
+  const emit = defineEmits(["addSeries"]);
+
+  const seriesStore = useSeriesStore();
+
+  const initialSeries = {
+    name: null,
+    groupsPerYear: {
+      1: 1,
+      2: 1,
+      3: 1,
+      4: 1,
+    },
+  };
+
+  const newSeries = ref({ ...initialSeries });
 
   const addSeries = async () => {
-    const seriesForm = new FormData();
-    seriesForm.append("name", name.value);
+    try {
+      const response = await $fetch("/api/series", {
+        method: "post",
+        body: newSeries.value,
+      });
+
+      seriesStore.newSeries = response.data;
+      isActive.value = false;
+      newSeries.value = { ...initialSeries };
+      emit("addSeries");
+    } catch (error) {
+      console.log(error.statusMessage);
+    }
+    // const seriesForm = new FormData();
+    // seriesForm.append("name", name.value);
     // console.log("inainte");
-
-    const { data: response } = await $fetch("/api/series", {
-      method: "POST",
-      body: seriesForm,
-    });
-
-    console.log(response);
   };
 </script>

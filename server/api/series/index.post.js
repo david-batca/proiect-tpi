@@ -1,11 +1,49 @@
+import { eq } from "drizzle-orm";
 import { db } from "~/server/db";
-import { Series } from "~/server/db/schema";
+import { Groups, Series } from "~/server/db/schema";
 
 export default defineEventHandler(async (event) => {
-  //   const body = await readBody(event);
+  const { name, groupsPerYear } = await readBody(event);
 
-  //   await db.insert(Series).values({});
-  return true;
+  const exists = await db.query.Series.findFirst({
+    where: eq(Series.name, name),
+  });
+
+  if (exists)
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Exista o serie cu acelasi nume",
+    });
+
+  const newSeries = await db
+    .insert(Series)
+    .values({
+      name: name,
+      groupsYear1: groupsPerYear[1],
+      groupsYear2: groupsPerYear[2],
+      groupsYear3: groupsPerYear[3],
+      groupsYear4: groupsPerYear[4],
+    })
+    .returning();
+
+  for (let year in groupsPerYear) {
+    for (let i = 1; i <= groupsPerYear[year]; i++) {
+      await db.insert(Groups).values({
+        name: `4${year}${i}${newSeries.at(0).name}`,
+        seriesId: newSeries.at(0).id,
+      });
+    }
+  }
+
+  const newSeriesWithGroups = await db.query.Series.findFirst({
+    where: eq(Series.id, newSeries.at(0).id),
+    with: { groups: true },
+  });
+
+  return {
+    data: newSeriesWithGroups,
+    message: "Seria a fost adaugata cu succes",
+  };
   //   return body;
   //   return JSON.parse(body);
 });
