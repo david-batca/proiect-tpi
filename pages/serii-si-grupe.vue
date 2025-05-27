@@ -10,7 +10,7 @@
   </v-sheet>
 
   <v-sheet variant="flat" color="blue-grey-darken-3" class="rounded-lg pa-4">
-    <!-- {{ series }} -->
+    {{ series }}
   </v-sheet>
 </template>
 
@@ -24,6 +24,6 @@
   const { data: series } = await useFetch("/api/series");
 
   onMounted(() => {
-    console.log(series.value);
+    // console.log(series.value);
   });
 </script>
