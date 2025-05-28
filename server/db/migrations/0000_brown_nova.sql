@@ -1,6 +1,7 @@
 CREATE TABLE "groups" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(10) NOT NULL,
+	"year" integer NOT NULL,
 	"series_id" integer NOT NULL,
 	CONSTRAINT "groups_name_unique" UNIQUE("name")
 );

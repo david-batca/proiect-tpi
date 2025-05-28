@@ -98,14 +98,13 @@
       });
 
       seriesStore.newSeries = response.data;
+
       isActive.value = false;
       newSeries.value = { ...initialSeries };
+
       emit("addSeries");
     } catch (error) {
       console.log(error.statusMessage);
     }
-    // const seriesForm = new FormData();
-    // seriesForm.append("name", name.value);
-    // console.log("inainte");
   };
 </script>

@@ -15,21 +15,19 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Exista o serie cu acelasi nume",
     });
 
-  const newSeries = await db
-    .insert(Series)
-    .values({
-      name: name,
-      groupsYear1: groupsPerYear[1],
-      groupsYear2: groupsPerYear[2],
-      groupsYear3: groupsPerYear[3],
-      groupsYear4: groupsPerYear[4],
-    })
-    .returning();
+  const requestBody = { name };
+
+  for (let year in groupsPerYear) {
+    requestBody[`groupsYear${year}`] = groupsPerYear[year];
+  }
+
+  const newSeries = await db.insert(Series).values(requestBody).returning();
 
   for (let year in groupsPerYear) {
     for (let i = 1; i <= groupsPerYear[year]; i++) {
       await db.insert(Groups).values({
         name: `4${year}${i}${newSeries.at(0).name}`,
+        year: year,
         seriesId: newSeries.at(0).id,
       });
     }
@@ -41,9 +39,8 @@ export default defineEventHandler(async (event) => {
   });
 
   return {
+    status: "success",
     data: newSeriesWithGroups,
     message: "Seria a fost adaugata cu succes",
   };
-  //   return body;
-  //   return JSON.parse(body);
 });

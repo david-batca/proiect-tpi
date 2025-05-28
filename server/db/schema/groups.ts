@@ -5,6 +5,7 @@ import { relations } from "drizzle-orm";
 export const Groups = pgTable("groups", {
   id: serial().primaryKey(),
   name: varchar({ length: 10 }).notNull().unique(),
+  year: integer().notNull(),
   seriesId: integer("series_id")
     .references(() => Series.id, { onDelete: "cascade" })
     .notNull(),
