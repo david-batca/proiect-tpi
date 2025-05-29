@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-app class="overflow-y-hidden">
+    <v-app class="overflow-y-hidden" theme="dark">
       <Navbar />
 
       <Appbar />

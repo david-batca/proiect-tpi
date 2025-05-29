@@ -8,7 +8,15 @@
       <v-toolbar color="blue-grey-darken-3">
         <v-toolbar-title>Adauga serie</v-toolbar-title>
 
-        <v-btn icon="mdi-close" @click="isActive = false"></v-btn>
+        <v-btn
+          icon="mdi-close"
+          @click="
+            () => {
+              newSeries = Object(initialSeries);
+              isActive = false;
+            }
+          "
+        ></v-btn>
       </v-toolbar>
 
       <v-card-text class="px-4">
@@ -26,6 +34,7 @@
           label="Numar grupe anul 1"
           :hideInput="false"
           inset
+          variant="outlined"
         ></v-number-input>
 
         <v-number-input
@@ -34,6 +43,7 @@
           label="Numar grupe anul 2"
           :hideInput="false"
           inset
+          variant="outlined"
         ></v-number-input>
 
         <v-number-input
@@ -42,6 +52,7 @@
           label="Numar grupe anul 3"
           :hideInput="false"
           inset
+          variant="outlined"
         ></v-number-input>
 
         <v-number-input
@@ -50,12 +61,18 @@
           label="Numar grupe anul 4"
           :hideInput="false"
           inset
+          variant="outlined"
         ></v-number-input>
       </v-card-text>
 
       <v-card-actions>
         <v-btn
-          @click="isActive = false"
+          @click="
+            () => {
+              newSeries = Object(initialSeries);
+              isActive = false;
+            }
+          "
           color="error"
           text="Inchide"
           variant="flat"
@@ -76,7 +93,7 @@
 
   const emit = defineEmits(["addSeries"]);
 
-  const seriesStore = useSeriesStore();
+  const formStore = useFormStore();
 
   const initialSeries = {
     name: null,
@@ -88,7 +105,7 @@
     },
   };
 
-  const newSeries = ref({ ...initialSeries });
+  const newSeries = ref(Object(initialSeries));
 
   const addSeries = async () => {
     try {
@@ -97,10 +114,10 @@
         body: newSeries.value,
       });
 
-      seriesStore.newSeries = response.data;
+      formStore.newSeries = response.data;
 
       isActive.value = false;
-      newSeries.value = { ...initialSeries };
+      newSeries.value = Object(initialSeries);
 
       emit("addSeries");
     } catch (error) {

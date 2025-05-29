@@ -6,16 +6,13 @@
   >
     <h1>Studenti</h1>
 
-    <AddStudentForm />
+    <AddStudentForm @addStudent="() => {}" :allSeries="allSeries" />
   </v-sheet>
 
   <v-sheet variant="flat" color="blue-grey-darken-3" class="rounded-lg pa-4">
     <v-data-table
       class="bg-blue-grey-darken-3"
-      :items="[
-        { id: 1, name: 'test 1' },
-        { id: 2, name: 'test 2' },
-      ]"
+      :items="students"
     ></v-data-table>
   </v-sheet>
 </template>
@@ -24,7 +21,9 @@
   definePageMeta({
     name: "Studenti",
   });
-  const route = useRoute();
+
+  const { data: students } = await useFetch("/api/students");
+  const { data: allSeries } = await useFetch("/api/series");
 </script>
 
 <style></style>

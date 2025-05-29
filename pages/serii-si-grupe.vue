@@ -7,17 +7,30 @@
     <h1>Serii si grupe</h1>
 
     <AddSeriesForm
+      v-if="tabValue === 'serii'"
       @addSeries="
         () => {
-          series.push(seriesStore.newSeries);
-          seriesStore.resetNewSeries();
+          series.push(formStore.newSeries);
+          formStore.resetNewSeries();
         }
       "
     />
   </v-sheet>
 
+  <v-tabs v-model="tabValue" class="rounded-lg mb-2">
+    <v-tab value="serii">Serii</v-tab>
+    <v-tab value="grupe">Grupe</v-tab>
+  </v-tabs>
+
   <v-sheet variant="flat" color="blue-grey-darken-3" class="rounded-lg pa-4">
-    {{ series }}
+    <v-tabs-window v-model="tabValue">
+      <v-tabs-window-item value="serii">
+        <SeriesTable :series="series" />
+      </v-tabs-window-item>
+      <v-tabs-window-item value="grupe">
+        <GroupsTable :groups="groups" />
+      </v-tabs-window-item>
+    </v-tabs-window>
   </v-sheet>
 </template>
 
@@ -26,11 +39,16 @@
     name: "Serii si grupe",
   });
 
-  const seriesStore = useSeriesStore();
+  const tabValue = ref("serii");
+
+  const formStore = useFormStore();
 
   const { data: series } = await useFetch("/api/series");
+  const { data: groups } = await useFetch("/api/groups");
+
+  const test = await useFetch("/api/groups/100");
 
   onMounted(() => {
-    // console.log(series.value);
+    console.log(test.error.value);
   });
 </script>
