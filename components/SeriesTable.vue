@@ -2,7 +2,7 @@
   <v-data-table
     :items="series"
     :headers="headers"
-    style="background-color: transparent"
+    class="bg-blue-grey-darken-3"
   >
   </v-data-table>
 </template>

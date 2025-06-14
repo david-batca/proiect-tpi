@@ -9,9 +9,11 @@
     <AddSeriesForm
       v-if="tabValue === 'serii'"
       @addSeries="
-        () => {
-          series.push(formStore.newSeries);
-          formStore.resetNewSeries();
+        async () => {
+          // series.push(formStore.newSeries);
+          // formStore.resetNewSeries();
+          await seriesRefresh();
+          await groupsRefresh();
         }
       "
     />
@@ -43,12 +45,10 @@
 
   const formStore = useFormStore();
 
-  const { data: series } = await useFetch("/api/series");
-  const { data: groups } = await useFetch("/api/groups");
-
-  const test = await useFetch("/api/groups/100");
-
-  onMounted(() => {
-    console.log(test.error.value);
-  });
+  const { data: series, refresh: seriesRefresh } = await useFetch(
+    "/api/series"
+  );
+  const { data: groups, refresh: groupsRefresh } = await useFetch(
+    "/api/groups"
+  );
 </script>

@@ -17,7 +17,7 @@ export const Students = pgTable("students", {
   email: varchar({ length: 255 }).notNull().unique(),
   phone: varchar({ length: 12 }).notNull().unique(),
   year: integer().notNull(),
-  univeristyEmail: varchar("university_email", { length: 255 })
+  universityEmail: varchar("university_email", { length: 255 })
     .notNull()
     .unique(),
   groupId: integer("group_id")
@@ -29,7 +29,7 @@ export const Students = pgTable("students", {
 
 export const StudentsRelations = relations(Students, ({ one, many }) => {
   return {
-    groups: one(Groups, {
+    group: one(Groups, {
       fields: [Students.groupId],
       references: [Groups.id],
     }),

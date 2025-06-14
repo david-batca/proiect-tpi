@@ -105,7 +105,7 @@
     },
   };
 
-  const newSeries = ref(Object(initialSeries));
+  const newSeries = ref({ ...initialSeries });
 
   const addSeries = async () => {
     try {
@@ -114,10 +114,10 @@
         body: newSeries.value,
       });
 
-      formStore.newSeries = response.data;
+      // formStore.newSeries = response.data;
 
       isActive.value = false;
-      newSeries.value = Object(initialSeries);
+      newSeries.value = { ...initialSeries };
 
       emit("addSeries");
     } catch (error) {

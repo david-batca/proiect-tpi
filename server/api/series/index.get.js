@@ -13,22 +13,5 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  // const groups = await db
-  //   .select({
-  //     id: Groups.id,
-  //     name: Groups.name,
-  //     year: Groups.year,
-  //     series: {
-  //       id: Series.id,
-  //       name: Series.name,
-  //     },
-  //     studentsCount: sql`COUNT(${Students.id})`,
-  //   })
-  //   .from(Groups)
-  //   .leftJoin(Students, eq(Students.groupId, Groups.id))
-  //   .innerJoin(Series, eq(Series.id, Groups.seriesId))
-  //   .groupBy(Students.id, Groups.id, Series.id)
-  //   .orderBy(Groups.id);
-
   return series;
 });
