@@ -9,9 +9,12 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "db:generate": "npx drizzle-kit generate",
-    "db:migrate": "npx drizzle-kit migrate"
+    "db:migrate": "npx drizzle-kit migrate",
+    "db:rollback": "npx drizzle-kit drop",
+    "db:studio": "npx drizzle-kit studio"
   },
   "dependencies": {
+    "@vuepic/vue-datepicker": "^11.0.2",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.41.0",
     "nuxt": "^3.16.1",
@@ -20,6 +23,7 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "@pinia/nuxt": "^0.11.0",
     "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.30.6",
     "tsx": "^4.19.3",

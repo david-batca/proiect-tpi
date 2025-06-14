@@ -1,11 +1,5 @@
 <template>
-  <v-app-bar
-    app
-    flat
-    :order="-1"
-    color="indigo-darken-4"
-    class="position-fixed"
-  >
+  <v-app-bar app flat :order="-1" color="blue-darken-4" class="position-fixed">
     <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
     <div class="ml-8 bg-white pa-3 h-75 rounded-lg">
@@ -15,7 +9,7 @@
       />
     </div>
 
-    <div style="width: 136px" class="d-none d-md-block"></div>
+    <div style="width: 100px" class="d-none d-md-block"></div>
 
     <div class="d-flex align-center justify-start">
       <v-btn
@@ -24,12 +18,9 @@
         variant="text"
         @click="() => router.back()"
       />
-      <!-- <h1 class="text-h6 d-none d-md-block font-weight-bold">
-          {{ route.meta?.title }}
-        </h1>
-        <h1 class="text-subtitle-1 d-md-none d-block font-weight-bold">
-          {{ route.meta?.title }}
-        </h1> -->
+      <h1 class="text-h6 d-none d-md-block font-weight-bold">
+        {{ route.name }}
+      </h1>
     </div>
   </v-app-bar>
 </template>

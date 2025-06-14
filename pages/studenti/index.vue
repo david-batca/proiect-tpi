@@ -1,29 +1,35 @@
 <template>
-  <v-card variant="flat" class="bg-blue-grey-darken-4 mb-8" color="">
-    <template #title>
-      <h1>Studenti</h1>
-    </template>
+  <v-sheet
+    variant="flat"
+    color="blue-grey-darken-3"
+    class="d-flex justify-space-between align-center rounded-lg pa-4 mb-8"
+  >
+    <h1>Studenti</h1>
 
-    <template #append>
-      <v-btn color="blue-darken-4" class="round-lg">Adauga student</v-btn>
-    </template>
-  </v-card>
+    <AddStudentForm
+      @addStudent="
+        async () => {
+          await studentsRefresh();
+        }
+      "
+      :allSeries="allSeries"
+    />
+  </v-sheet>
 
-  <v-card variant="flat" class="bg-blue-grey-darken-3">
-    <template #text>
-      <v-data-table
-        class="bg-blue-grey-darken-3"
-        :items="[
-          { id: 1, name: 'test 1' },
-          { id: 2, name: 'test 2' },
-        ]"
-      ></v-data-table>
-    </template>
-  </v-card>
+  <v-sheet variant="flat" color="blue-grey-darken-3" class="rounded-lg pa-4">
+    <StudentsTable :students="students" />
+  </v-sheet>
 </template>
 
 <script setup>
-  const route = useRoute();
+  definePageMeta({
+    name: "Studenti",
+  });
+
+  const { data: students, refresh: studentsRefresh } = await useFetch(
+    "/api/students"
+  );
+  const { data: allSeries } = await useFetch("/api/series");
 </script>
 
 <style></style>

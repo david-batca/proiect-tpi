@@ -1,16 +1,13 @@
 <template>
   <v-layout>
-    <v-app class="overflow-y-hidden">
+    <v-app class="overflow-y-hidden" theme="dark">
       <Navbar />
 
       <Appbar />
 
-      <v-sheet color="indigo-darken-4" class="pa-4 pt-0 h-screen">
-        <v-main>
-          <v-sheet
-            color="blue-grey-darken-3"
-            class="pa-4 rounded-xl main-height"
-          >
+      <v-sheet color="blue-darken-4" class="pa-4 pt-0 h-100">
+        <v-main class="h-100">
+          <v-sheet color="blue-grey-darken-4" class="pa-4 rounded-lg h-100">
             <slot />
           </v-sheet>
         </v-main>
