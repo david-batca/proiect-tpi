@@ -20,11 +20,9 @@ export const Students = pgTable("students", {
   universityEmail: varchar("university_email", { length: 255 })
     .notNull()
     .unique(),
-  groupId: integer("group_id")
-    .references(() => Groups.id, {
-      onDelete: "set null",
-    })
-    .notNull(),
+  groupId: integer("group_id").references(() => Groups.id, {
+    onDelete: "set null",
+  }),
 });
 
 export const StudentsRelations = relations(Students, ({ one, many }) => {

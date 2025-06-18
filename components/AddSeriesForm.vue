@@ -3,7 +3,7 @@
     >Adauga serie</v-btn
   >
 
-  <v-dialog v-model="isActive" width="400">
+  <v-dialog v-model="isActive" width="400" persistent>
     <v-card color="blue-grey-darken-4">
       <v-toolbar color="blue-grey-darken-3">
         <v-toolbar-title>Adauga serie</v-toolbar-title>
@@ -12,7 +12,7 @@
           icon="mdi-close"
           @click="
             () => {
-              newSeries = Object(initialSeries);
+              newSeries = { ...initialSeries };
               isActive = false;
             }
           "
@@ -63,13 +63,15 @@
           inset
           variant="outlined"
         ></v-number-input>
+
+        <div v-if="errorMessage" class="text-error">{{ errorMessage }}</div>
       </v-card-text>
 
       <v-card-actions>
         <v-btn
           @click="
             () => {
-              newSeries = Object(initialSeries);
+              newSeries = { ...initialSeries };
               isActive = false;
             }
           "
@@ -103,21 +105,29 @@
     },
   };
 
-  const newSeries = ref({ ...initialSeries });
+  const newSeries = ref(structuredClone(initialSeries));
+
+  const errorMessage = ref(null);
+
+  const { show } = useSnackbar();
 
   const addSeries = async () => {
     try {
+      errorMessage.value = null;
+
       const response = await $fetch("/api/series", {
         method: "post",
         body: newSeries.value,
       });
 
       isActive.value = false;
-      newSeries.value = { ...initialSeries };
+      newSeries.value = structuredClone(initialSeries);
+
+      show(response.message, response.status);
 
       emit("addSeries");
     } catch (error) {
-      console.log(error.statusMessage);
+      errorMessage.value = error.statusMessage;
     }
   };
 </script>

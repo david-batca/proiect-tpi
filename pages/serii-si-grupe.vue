@@ -41,8 +41,6 @@
 
   const tabValue = ref("serii");
 
-  // const formStore = useFormStore();
-
   const { data: series, refresh: seriesRefresh } = await useFetch(
     "/api/series"
   );

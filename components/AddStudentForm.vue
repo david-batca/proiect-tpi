@@ -124,6 +124,10 @@
                 hide-details
               ></v-text-field>
             </v-col>
+
+            <v-col v-if="errorMessage" cols="12">
+              <div class="text-error">{{ errorMessage }}</div>
+            </v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -152,6 +156,8 @@
 </template>
 
 <script setup>
+  import { useSnackbar } from "~/composables/useSnackbar";
+
   const { allSeries } = defineProps(["allSeries"]);
   const emit = defineEmits(["addStudent"]);
 
@@ -171,6 +177,8 @@
   const newStudent = ref({ ...initialStudent });
 
   const errorMessage = ref(null);
+
+  const { show } = useSnackbar();
 
   const availableGroups = computed(() => {
     if (!newStudent.value.year || !newStudent.value.series) return [];
@@ -202,6 +210,8 @@
 
   const addStudentHandler = async () => {
     try {
+      errorMessage.value = null;
+
       const response = await $fetch("/api/students", {
         method: "post",
         body: {
@@ -210,14 +220,14 @@
         },
       });
 
-      if (response.status === "success") {
-        isActive.value = false;
-        newStudent.value = { ...initialStudent };
+      isActive.value = false;
+      newStudent.value = { ...initialStudent };
 
-        emit("addStudent");
-      }
+      show(response.message, response.status);
+
+      emit("addStudent");
     } catch (error) {
-      console.log(error);
+      errorMessage.value = error.statusMessage;
     }
   };
 </script>

@@ -12,6 +12,8 @@
           </v-sheet>
         </v-main>
       </v-sheet>
+
+      <SnackBar />
     </v-app>
   </v-layout>
 </template>

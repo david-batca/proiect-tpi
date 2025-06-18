@@ -2,12 +2,7 @@ import { ro } from "vuetify/locale";
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
-  devtools: { enabled: true },
-  runtimeConfig: {
-    public: {
-      timezone: process.env.TZ,
-    },
-  },
+  devtools: { enabled: false },
   modules: ["vuetify-nuxt-module", "@pinia/nuxt"],
   vuetify: {
     vuetifyOptions: {

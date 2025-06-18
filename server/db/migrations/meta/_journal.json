@@ -36,6 +36,13 @@
       "when": 1748468339442,
       "tag": "0004_brown_mole_man",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1750268620953,
+      "tag": "0005_fantastic_karma",
+      "breakpoints": true
     }
   ]
 }
