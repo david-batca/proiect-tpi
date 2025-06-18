@@ -10,8 +10,6 @@
       v-if="tabValue === 'serii'"
       @addSeries="
         async () => {
-          // series.push(formStore.newSeries);
-          // formStore.resetNewSeries();
           await seriesRefresh();
           await groupsRefresh();
         }
@@ -43,7 +41,7 @@
 
   const tabValue = ref("serii");
 
-  const formStore = useFormStore();
+  // const formStore = useFormStore();
 
   const { data: series, refresh: seriesRefresh } = await useFetch(
     "/api/series"

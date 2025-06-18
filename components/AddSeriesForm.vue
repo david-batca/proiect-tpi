@@ -93,8 +93,6 @@
 
   const emit = defineEmits(["addSeries"]);
 
-  const formStore = useFormStore();
-
   const initialSeries = {
     name: null,
     groupsPerYear: {
@@ -113,8 +111,6 @@
         method: "post",
         body: newSeries.value,
       });
-
-      // formStore.newSeries = response.data;
 
       isActive.value = false;
       newSeries.value = { ...initialSeries };

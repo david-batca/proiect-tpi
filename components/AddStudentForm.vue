@@ -25,14 +25,6 @@
             <v-col cols="6"
               ><v-text-field
                 v-model="newStudent.lastName"
-                @update:model-value="
-                  (value) =>
-                    changeUniveristyEmal(
-                      newStudent.firstName,
-                      value,
-                      newStudent.birthDate
-                    )
-                "
                 label="Nume"
                 variant="outlined"
                 density="compact"
@@ -44,14 +36,6 @@
             <v-col cols="6"
               ><v-text-field
                 v-model="newStudent.firstName"
-                @update:model-value="
-                  (value) =>
-                    changeUniveristyEmal(
-                      value,
-                      newStudent.lastName,
-                      newStudent.birthDate
-                    )
-                "
                 label="Prenume"
                 variant="outlined"
                 density="compact"
@@ -63,14 +47,6 @@
             <v-col cols="6">
               <VDateInput
                 v-model="newStudent.birthDate"
-                @update:model-value="
-                  (value) =>
-                    changeUniveristyEmal(
-                      newStudent.firstName,
-                      newStudent.lastName,
-                      value
-                    )
-                "
                 variant="outlined"
                 prepend-icon=""
                 placeholder=""
@@ -88,9 +64,6 @@
                 :items="[1, 2, 3, 4]"
                 hide-details
                 clearable
-                @update:model-value="
-                  (value) => changeAvailableGroups(value, newStudent.series)
-                "
               ></v-select>
             </v-col>
 
@@ -104,9 +77,6 @@
                 variant="outlined"
                 hide-details
                 clearable
-                @update:model-value="
-                  (value) => changeAvailableGroups(newStudent.year, value)
-                "
               ></v-select>
             </v-col>
 
@@ -147,7 +117,7 @@
 
             <v-col cols="12">
               <v-text-field
-                v-model="newStudent.universityEmail"
+                v-model="universityEmail"
                 label="Adresa de email din cadrul facultatii"
                 variant="outlined"
                 density="compact"
@@ -182,14 +152,10 @@
 </template>
 
 <script setup>
-  const isActive = ref(false);
-  const availableGroups = ref([]);
-
   const { allSeries } = defineProps(["allSeries"]);
-
   const emit = defineEmits(["addStudent"]);
 
-  const formStore = useFormStore();
+  const isActive = ref(false);
 
   const initialStudent = {
     firstName: null,
@@ -200,47 +166,50 @@
     group: null,
     email: null,
     phone: null,
-    universityEmail: null,
   };
 
   const newStudent = ref({ ...initialStudent });
 
-  const changeAvailableGroups = (year, seriesId) => {
-    newStudent.value.group = null;
-    availableGroups.value = [];
+  const errorMessage = ref(null);
 
-    if (!year || !seriesId) return;
+  const availableGroups = computed(() => {
+    if (!newStudent.value.year || !newStudent.value.series) return [];
 
-    availableGroups.value = allSeries
-      .find((series) => series.id === seriesId)
-      .groups.filter((group) => group.year === year);
-  };
+    return allSeries
+      .find((series) => series.id === newStudent.value.series)
+      .groups.filter((group) => group.year === newStudent.value.year);
+  });
 
-  const changeUniveristyEmal = (firstName, lastName, birthDate) => {
-    newStudent.value.universityEmail = null;
-    if (!firstName || !lastName || !birthDate) return;
+  const universityEmail = computed(() => {
+    if (
+      !newStudent.value.firstName ||
+      !newStudent.value.lastName ||
+      !newStudent.value.birthDate
+    )
+      return null;
 
-    if (firstName && lastName && birthDate) {
-      newStudent.value.universityEmail = `${newStudent.value.firstName
-        .toLowerCase()
-        .split("-")
-        .join(" ")
-        .split(" ")
-        .join("_")}.${newStudent.value.lastName.toLowerCase()}${String(
-        birthDate.getDate()
-      ).padStart(2, "0")}${String(birthDate.getMonth() + 1).padStart(
-        2,
-        "0"
-      )}@stud.etti.upb.ro`;
-    }
-  };
+    return `${newStudent.value.firstName
+      .toLowerCase()
+      .split("-")
+      .join(" ")
+      .split(" ")
+      .join("_")}.${newStudent.value.lastName.toLowerCase()}${String(
+      newStudent.value.birthDate.getDate()
+    ).padStart(2, "0")}${String(
+      newStudent.value.birthDate.getMonth() + 1
+    ).padStart(2, "0")}@stud.etti.upb.ro`;
+  });
 
   const addStudentHandler = async () => {
     try {
       const response = await $fetch("/api/students", {
         method: "post",
-        body: newStudent.value,
+        body: {
+          ...newStudent.value,
+          universityEmail: universityEmail.value,
+        },
       });
+
       if (response.status === "success") {
         isActive.value = false;
         newStudent.value = { ...initialStudent };
@@ -248,7 +217,7 @@
         emit("addStudent");
       }
     } catch (error) {
-      console.log(error.statusMessage);
+      console.log(error);
     }
   };
 </script>
